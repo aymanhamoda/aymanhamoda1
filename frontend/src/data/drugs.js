@@ -1,0 +1,22 @@
+const drugs = [
+  { _id: 0.1, label: 'Adrenaline 1000 mcg amp', mg: 1 },
+  { _id: 1, label: 'Atracurium 50 mg/5ml', mg: 50 },
+  { _id: 1.2, label: 'Atracurium 100 mg/5ml', mg: 100 },
+  { _id: 2.1, label: 'Cisatracurium 5 mg/2.5 ml', mg: 5 },
+  { _id: 2.2, label: 'Cisatracurium 10 mg/5 ml', mg: 10 },
+  { _id: 2.3, label: 'Cisatracurium 20 mg/10 ml', mg: 20 },
+  { _id: 3, label: 'Dobutamine 250 mg amp', mg: 250 },
+  { _id: 4, label: 'Dopamine 200 mg amp', mg: 200 },
+  { _id: 10, label: 'Fentanyl 100 mcg amp', mg: 0.1 },
+  { _id: 20, label: 'Midazolam 1mg amp', mg: 1 },
+  { _id: 30, label: 'Midazolam 5mg amp', mg: 5 },
+  { _id: 30.1, label: 'Nitroglycerine 50mg/50ml amp', mg: 50 },
+  { _id: 31, label: 'NorAdrenaline 4mg amp', mg: 4 },
+  { _id: 31.1, label: 'Omeprazole 40mg amp', mg: 40 },
+  { _id: 32, label: 'Phentolamine 10mg/ml amp', mg: 10 },
+  { _id: 40, label: 'Propofol 1% 20ml amp', mg: 200 },
+  { _id: 50, label: 'Propofol 1% 50ml amp', mg: 500 },
+  { _id: 60, label: 'Propofol 2% 20 ml amp', mg: 400 },
+  { _id: 70, label: 'Propofol 2% 50 ml amp', mg: 1000 },
+]
+export default drugs
