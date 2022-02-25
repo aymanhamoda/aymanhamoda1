@@ -6,18 +6,33 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import Loader from '../../components/Loader'
 
 const YoutubeNew = ({ selectedYoutube }) => {
+  const [mediaId, setMediaId] = useState('')
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
   const [image, setImage] = useState('')
   const [description, setDescription] = useState('')
+  const [keywords, setKeywords] = useState([])
   const [uploading, setUploading] = useState()
   const [uploadedData, setUploadedData] = useState()
 
   const createMedia = (e) => {
-    setUploading(true)
     e.preventDefault()
+    setUploading(true)
     axios
       .post(`/api/youtube`, { title, url, image, description })
+      .then((res) => setUploadedData(res.data))
+  }
+
+  const updateMedia = (e) => {
+    setUploading(true)
+    axios
+      .put(`/api/youtube/${e}`, {
+        title,
+        url,
+        image,
+        description,
+        keywords,
+      })
       .then((res) => setUploadedData(res.data))
   }
 
@@ -26,10 +41,12 @@ const YoutubeNew = ({ selectedYoutube }) => {
       setUploading(false)
     }
     if (selectedYoutube) {
+      setMediaId(selectedYoutube._id)
       setTitle(selectedYoutube.title)
       setUrl(selectedYoutube.url)
       setImage(selectedYoutube.image)
       setDescription(selectedYoutube.description)
+      setKeywords(selectedYoutube.keywords)
     }
   }, [uploadedData, selectedYoutube])
   return (
@@ -91,6 +108,7 @@ const YoutubeNew = ({ selectedYoutube }) => {
 
                   <Button
                     className="ml-2"
+                    onClick={() => updateMedia(mediaId)}
                     style={{ float: 'right' }}
                     variant="secondary">
                     Update

@@ -52,4 +52,35 @@ const deleteYoutube = asyncHandler(async (req, res) => {
   }
 })
 
-export { getYoutubes, getYoutubeById, createYoutube, deleteYoutube }
+// @desc    Update a youtube
+// @route   PUT /api/youtubes/:id
+// @access  Private/Admin
+const updateYoutube = asyncHandler(async (req, res) => {
+  const { title, url, description, image, keywords, views } = req.body
+
+  const youtube = await Youtube.findById(req.params.id)
+
+  if (youtube) {
+    youtube.title = title
+    youtube.description = description
+    youtube.url = url
+    youtube.image = image
+    youtube.views = views
+    youtube.description = description
+    youtube.keywords = keywords
+
+    const updatedYoutube = await youtube.save()
+    res.json(updatedYoutube)
+  } else {
+    res.status(404)
+    throw new Error('Course not found')
+  }
+})
+
+export {
+  getYoutubes,
+  getYoutubeById,
+  createYoutube,
+  deleteYoutube,
+  updateYoutube,
+}
