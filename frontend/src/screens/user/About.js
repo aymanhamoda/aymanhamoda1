@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Image } from 'react-bootstrap'
 import Meta from '../../components/Meta'
+
 const About = () => {
   return (
     <>
@@ -27,19 +28,6 @@ const About = () => {
           </div>
         </div>
       </div>
-
-      {/* <hr />
-      <div className="row">
-        <div className="col">
-          <div className="form-label text-alignment-bottom">
-            <h1>Let a message</h1>
-          </div>
-          <div
-            className="form-control"
-            type="text"
-            placeholder="Your First Name"></div>
-        </div>
-      </div> */}
     </>
   )
 }

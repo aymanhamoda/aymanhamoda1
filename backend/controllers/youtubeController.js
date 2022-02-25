@@ -33,6 +33,8 @@ const createYoutube = asyncHandler(async (req, res) => {
     url: req.body.url,
     description: req.body.description,
     image: req.body.image,
+    views: req.body.views,
+    keywords: req.body.keywords,
   })
   const createdYoutube = await youtube.save()
   res.status(201).json(createdYoutube)
