@@ -17,17 +17,17 @@ const YoutubePlay = ({ match }) => {
   const [media, setMedia] = useState()
   const [mediaTitle, setMediaTitle] = useState()
   const [admin, setAdmin] = useState('')
-  const [text, setText] = useState('')
+  const [description, setDescription] = useState('')
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  const urlify = (e) => {
-    var urlRegex = /(https?:\/\/[^\s]+)/g
-    return e.replace(urlRegex, (url) => {
-      return '<a href="' + url + '">' + 'Link' + `</a>`
-    })
-  }
+  // const urlify = (e) => {
+  //   var urlRegex = /(https?:\/\/[^\s]+)/g
+  //   return e.replace(urlRegex, (url) => {
+  //     return '<a href="' + url + '">' + 'Link' + `</a>`
+  //   })
+  // }
 
   useEffect(() => {
     // get all videos
@@ -45,14 +45,14 @@ const YoutubePlay = ({ match }) => {
       setFileToPreview(media.url)
       setMediaTitle(media.title)
       setYoutubeList(youtubes.filter((x) => x._id !== media._id))
-      setText(media.description)
+      setDescription(media.description)
     }
     if (userInfo) {
       if (userInfo.isAdmin) {
         setAdmin(true)
       }
     }
-  }, [videoId, userInfo, text, fileToPreview, media, youtubes])
+  }, [videoId, userInfo, fileToPreview, media, youtubes])
 
   return (
     <>
@@ -81,9 +81,10 @@ const YoutubePlay = ({ match }) => {
               ) : (
                 <Image src={fileToPreview} fluid />
               )}
-              <p className="py-5 lead justify-content-center">
-                <div dangerouslySetInnerHTML={{ __html: `${urlify(text)}` }} />
-              </p>
+              <div
+                className="py-4"
+                dangerouslySetInnerHTML={{ __html: `${description}` }}
+              />
             </section>
           )}
           {youtubeList && (

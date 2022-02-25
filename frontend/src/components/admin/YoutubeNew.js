@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Button, Form, FormGroup, FormLabel } from 'react-bootstrap'
+import { Button, Form, FormGroup, FormLabel, Image } from 'react-bootstrap'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import Loader from '../../components/Loader'
 
-const YoutubeNew = () => {
+const YoutubeNew = ({ selectedYoutube }) => {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
   const [image, setImage] = useState('')
@@ -25,7 +25,13 @@ const YoutubeNew = () => {
     if (uploadedData) {
       setUploading(false)
     }
-  }, [uploadedData])
+    if (selectedYoutube) {
+      setTitle(selectedYoutube.title)
+      setUrl(selectedYoutube.url)
+      setImage(selectedYoutube.image)
+      setDescription(selectedYoutube.description)
+    }
+  }, [uploadedData, selectedYoutube])
   return (
     <div className="container py-5">
       <h3>NEW MEDIA</h3>
@@ -52,6 +58,9 @@ const YoutubeNew = () => {
             </FormGroup>
             <FormGroup className="py-2">
               <FormLabel style={{ fontWeight: 'bold' }}>Cover Image</FormLabel>
+              {image && (
+                <Image className="d-flex flex-row-reverse" src={image} fluid />
+              )}
               <Form.Control
                 type="text"
                 placeholder="Enter Image Cover"
@@ -70,14 +79,23 @@ const YoutubeNew = () => {
               />
             </FormGroup>
             <div className="container">
-              <div className="row d-flex justify-content-end py-3 ">
-                {uploading ? (
-                  <Loader />
-                ) : (
-                  <Button type="submit" variant="primary">
-                    Submit
+              <div className="row d-flex  py-3 ">
+                <div className="col justify-content-end">
+                  {uploading ? (
+                    <Loader />
+                  ) : (
+                    <Button type="submit" variant="primary">
+                      Create
+                    </Button>
+                  )}
+
+                  <Button
+                    className="ml-2"
+                    style={{ float: 'right' }}
+                    variant="secondary">
+                    Update
                   </Button>
-                )}
+                </div>
               </div>
             </div>
           </Form>
