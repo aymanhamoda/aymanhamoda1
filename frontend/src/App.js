@@ -22,7 +22,7 @@ const App = () => {
       {/* Overflow to disable transverse scrolling */}
       <div style={{ overflow: 'hidden' }}>
         <Route path="/" component={HomeScreen} exact />
-        <Route path="/about" component={About} />
+        <Route path="/aymanhamouda" component={About} />
 
         <Route path="/admin" component={AdminScreen} />
 

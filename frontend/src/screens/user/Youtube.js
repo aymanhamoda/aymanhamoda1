@@ -41,7 +41,7 @@ const Youtube = ({ offMeta, limit }) => {
               {youtubes.map((youtube) => (
                 <div key={youtube._id} className="p-2 col-md-4">
                   <Link to={`youtube/${youtube._id}`}>
-                    <Image src={youtube.image} />
+                    <Image src={youtube.image} fluid />
                   </Link>
                 </div>
               ))}

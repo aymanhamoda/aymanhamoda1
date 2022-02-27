@@ -50,7 +50,7 @@ const Header = () => {
               <Link
                 onClick={() => setExpanded(expanded ? false : 'expanded')}
                 className="text-white p-3"
-                to="/about">
+                to="/aymanhamouda">
                 {' '}
                 <i className="fas fa-user"></i> About
               </Link>
