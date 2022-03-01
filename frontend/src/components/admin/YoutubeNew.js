@@ -4,8 +4,9 @@ import { Button, Form, FormGroup, FormLabel, Image } from 'react-bootstrap'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import Loader from '../../components/Loader'
+import Upload from '../Upload'
 
-const YoutubeNew = ({ selectedYoutube }) => {
+const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
   const [mediaId, setMediaId] = useState('')
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
@@ -15,6 +16,58 @@ const YoutubeNew = ({ selectedYoutube }) => {
   const [uploading, setUploading] = useState()
   const [uploadedData, setUploadedData] = useState()
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const { data } = await axios.post(
+        `/api/upload?folderPath=/images`,
+        formData,
+        config
+      )
+
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
+  const uploadContentHandler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const { data } = await axios.post(
+        `/api/upload?folderPath=/images`,
+        formData,
+        config
+      )
+
+      setUrl(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
   const createMedia = (e) => {
     e.preventDefault()
     setUploading(true)
@@ -39,7 +92,9 @@ const YoutubeNew = ({ selectedYoutube }) => {
   useEffect(() => {
     if (uploadedData) {
       setUploading(false)
+      setSelectedYoutube()
     }
+
     if (selectedYoutube) {
       setMediaId(selectedYoutube._id)
       setTitle(selectedYoutube.title)
@@ -48,78 +103,100 @@ const YoutubeNew = ({ selectedYoutube }) => {
       setDescription(selectedYoutube.description)
       setKeywords(selectedYoutube.keywords)
     }
-  }, [uploadedData, selectedYoutube])
+    console.log(image)
+  }, [uploadedData, selectedYoutube, image])
   return (
-    <div className="container py-5">
-      <h3>NEW MEDIA</h3>
-      <div className="row">
-        <div className="col">
-          <Form onSubmit={createMedia}>
-            <FormGroup className="py-2">
-              <FormLabel style={{ fontWeight: 'bold' }}>Title</FormLabel>
-              <Form.Control
-                type="text"
-                placeholder="Enter Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}></Form.Control>
-            </FormGroup>
-            <FormGroup className="py-2">
-              <FormLabel style={{ fontWeight: 'bold' }}>
-                Scientific Content
-              </FormLabel>
-              <Form.Control
-                type="text"
-                placeholder="Enter Media url"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}></Form.Control>
-            </FormGroup>
-            <FormGroup className="py-2">
-              <FormLabel style={{ fontWeight: 'bold' }}>Cover Image</FormLabel>
-              {image && (
-                <Image className="d-flex flex-row-reverse" src={image} fluid />
-              )}
-              <Form.Control
-                type="text"
-                placeholder="Enter Image Cover"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}></Form.Control>
-            </FormGroup>
-            <FormGroup className="py-2">
-              <FormLabel style={{ fontWeight: 'bold' }}>Description</FormLabel>
-              <CKEditor
-                editor={ClassicEditor}
-                data={description}
-                onChange={(event, editor) => {
-                  const data = editor.getData()
-                  setDescription(data)
-                }}
-              />
-            </FormGroup>
-            <div className="container">
-              <div className="row d-flex  py-3 ">
-                <div className="col justify-content-end">
-                  {uploading ? (
-                    <Loader />
-                  ) : (
-                    <Button type="submit" variant="primary">
-                      Create
-                    </Button>
-                  )}
+    <>
+      <div className="container py-5">
+        <h3>NEW MEDIA</h3>
 
-                  <Button
-                    className="ml-2"
-                    onClick={() => updateMedia(mediaId)}
-                    style={{ float: 'right' }}
-                    variant="secondary">
-                    Update
-                  </Button>
+        <div className="row">
+          <div className="col">
+            <Form onSubmit={createMedia}>
+              <FormGroup className="py-2">
+                <FormLabel style={{ fontWeight: 'bold' }}>Title</FormLabel>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}></Form.Control>
+              </FormGroup>
+
+              <Form.Group controlId="url">
+                <Form.Label className="font-weight-bold">
+                  Scientific Content
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter image url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}></Form.Control>
+                <Form.Control
+                  type="file"
+                  id="url-file"
+                  label="Choose File"
+                  custom="true"
+                  onChange={uploadContentHandler}
+                />
+                {/* {uploading && <Loader />} */}
+              </Form.Group>
+
+              <Form.Group controlId="image">
+                <Form.Label className="font-weight-bold">
+                  Image Cover
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter image url"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}></Form.Control>
+                <Form.Control
+                  type="file"
+                  id="image-file"
+                  label="Choose File"
+                  custom="true"
+                  onChange={uploadFileHandler}
+                />
+                {/* {uploading && <Loader />} */}
+              </Form.Group>
+
+              <FormGroup className="py-2">
+                <FormLabel className="font-weight-bold">Description</FormLabel>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={description}
+                  onChange={(event, editor) => {
+                    const data = editor.getData()
+                    setDescription(data)
+                  }}
+                />
+              </FormGroup>
+              <div className="container">
+                <div className="row d-flex  py-3 ">
+                  <div className="col justify-content-end">
+                    {uploading ? (
+                      <Loader />
+                    ) : (
+                      <Button type="submit" variant="primary">
+                        Create
+                      </Button>
+                    )}
+
+                    <Button
+                      className="ml-2"
+                      onClick={() => updateMedia(mediaId)}
+                      style={{ float: 'right' }}
+                      variant="secondary">
+                      Update
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Form>
+            </Form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
