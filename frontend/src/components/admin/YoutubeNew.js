@@ -12,7 +12,7 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
   const [url, setUrl] = useState('')
   const [image, setImage] = useState('')
   const [description, setDescription] = useState('')
-  const [keywords, setKeywords] = useState([{ idx: '', keyword: '' }])
+  const [keywords, setKeywords] = useState([{ idx: 0, keyword: '' }])
   const [uploading, setUploading] = useState(false)
   const [uploadedData, setUploadedData] = useState()
 
@@ -125,7 +125,7 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
 
         <div className="row">
           <div className="col">
-            <Form onSubmit={createMedia}>
+            <Form>
               <FormGroup className="py-2" controlId="title  ">
                 <FormLabel style={{ fontWeight: 'bold' }}>Title</FormLabel>
                 <Form.Control
@@ -186,7 +186,7 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
               </div>
               <div className="row py-2">
                 {keywords.map((k) => (
-                  <FormGroup className="col-10" key={k._id}>
+                  <FormGroup className="col-10" key={k}>
                     <input
                       defaultValue={k.keyword}
                       onChange={(e) => handelKeywords(e, k)}
@@ -215,7 +215,7 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
                     <Loader />
                   ) : (
                     <>
-                      <Button type="submit" variant="primary">
+                      <Button onClick={(e) => createMedia(e)} variant="primary">
                         Create
                       </Button>
 

@@ -15,7 +15,6 @@ const youtubeSchema = mongoose.Schema(
     },
     url: {
       type: String,
-      required: true,
     },
     description: {
       type: String,
