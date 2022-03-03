@@ -4,7 +4,7 @@ import { Button, Form, FormGroup, FormLabel, Image } from 'react-bootstrap'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import Loader from '../../components/Loader'
-import Upload from '../Upload'
+import { Link } from 'react-router-dom'
 
 const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
   const [mediaId, setMediaId] = useState('')
@@ -12,8 +12,8 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
   const [url, setUrl] = useState('')
   const [image, setImage] = useState('')
   const [description, setDescription] = useState('')
-  const [keywords, setKeywords] = useState([])
-  const [uploading, setUploading] = useState()
+  const [keywords, setKeywords] = useState([{ idx: '', keyword: '' }])
+  const [uploading, setUploading] = useState(false)
   const [uploadedData, setUploadedData] = useState()
 
   const uploadFileHandler = async (e) => {
@@ -72,7 +72,7 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
     e.preventDefault()
     setUploading(true)
     axios
-      .post(`/api/youtube`, { title, url, image, description })
+      .post(`/api/youtube`, { title, url, image, description, keywords })
       .then((res) => setUploadedData(res.data))
   }
 
@@ -89,6 +89,14 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
       .then((res) => setUploadedData(res.data))
   }
 
+  const addKeyword = () => {
+    setKeywords([...keywords, { idx: Math.random(), keyword: '' }])
+  }
+
+  const handelKeywords = (e, k) => {
+    k.keyword = e.target.value
+  }
+
   useEffect(() => {
     if (uploadedData) {
       setUploading(false)
@@ -101,10 +109,15 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
       setUrl(selectedYoutube.url)
       setImage(selectedYoutube.image)
       setDescription(selectedYoutube.description)
-      setKeywords(selectedYoutube.keywords)
+      if (selectedYoutube.keywords.length === 0) {
+        setKeywords([{ idx: Math.random(), keyword: '' }])
+      } else {
+        setKeywords(selectedYoutube.keywords)
+      }
+
+      // setKeywords(selectedYoutube.keywords)
     }
-    console.log(image)
-  }, [uploadedData, selectedYoutube, image])
+  }, [uploadedData, selectedYoutube, image, uploading])
   return (
     <>
       <div className="container py-5">
@@ -113,7 +126,7 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
         <div className="row">
           <div className="col">
             <Form onSubmit={createMedia}>
-              <FormGroup className="py-2">
+              <FormGroup className="py-2" controlId="title  ">
                 <FormLabel style={{ fontWeight: 'bold' }}>Title</FormLabel>
                 <Form.Control
                   type="text"
@@ -121,7 +134,6 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}></Form.Control>
               </FormGroup>
-
               <Form.Group controlId="url">
                 <Form.Label className="font-weight-bold">
                   Scientific Content
@@ -140,7 +152,6 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
                 />
                 {/* {uploading && <Loader />} */}
               </Form.Group>
-
               <Form.Group controlId="image">
                 <Form.Label className="font-weight-bold">
                   Image Cover
@@ -159,8 +170,7 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
                 />
                 {/* {uploading && <Loader />} */}
               </Form.Group>
-
-              <FormGroup className="py-2">
+              <FormGroup className="py-2" controlId="descritpion">
                 <FormLabel className="font-weight-bold">Description</FormLabel>
                 <CKEditor
                   editor={ClassicEditor}
@@ -170,29 +180,62 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
                     setDescription(data)
                   }}
                 />
-              </FormGroup>
-              <div className="container">
-                <div className="row d-flex  py-3 ">
-                  <div className="col justify-content-end">
-                    {uploading ? (
-                      <Loader />
-                    ) : (
+              </FormGroup>{' '}
+              <div className="form-label row font-weight-bold container pt-2">
+                Keywords
+              </div>
+              <div className="row py-2">
+                {keywords.map((k) => (
+                  <FormGroup className="col-10" key={k._id}>
+                    <input
+                      defaultValue={k.keyword}
+                      onChange={(e) => handelKeywords(e, k)}
+                      type="text"
+                      className="form-control required"
+                      placeholder="keyword"
+                      name="keyword"
+                      data-id={k._id}
+                      id={k.keyword}
+                    />
+                  </FormGroup>
+                ))}
+
+                <FormGroup className="col-2">
+                  <Button className="btn-danger" onClick={() => addKeyword()}>
+                    <i className="fa fa-plus-circle" aria-hidden="true" />
+                  </Button>
+                </FormGroup>
+              </div>
+            </Form>
+
+            <div className="row d-flex  py-3 ">
+              <div className="col">
+                <div className="d-flex justify-content-between">
+                  {uploading ? (
+                    <Loader />
+                  ) : (
+                    <>
                       <Button type="submit" variant="primary">
                         Create
                       </Button>
-                    )}
 
-                    <Button
-                      className="ml-2"
-                      onClick={() => updateMedia(mediaId)}
-                      style={{ float: 'right' }}
-                      variant="secondary">
-                      Update
-                    </Button>
-                  </div>
+                      {mediaId && (
+                        <>
+                          <Link className="btn btn-success" to={`${mediaId}`}>
+                            Show
+                          </Link>
+                          <Button
+                            onClick={() => updateMedia(mediaId)}
+                            className="btn-dark">
+                            Update
+                          </Button>
+                        </>
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
-            </Form>
+            </div>
           </div>
         </div>
       </div>

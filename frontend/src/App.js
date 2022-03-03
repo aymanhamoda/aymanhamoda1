@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/admin" component={AdminScreen} />
 
         <Route path="/media" component={Youtube} exact />
-        <Route path="/youtubes/admin" component={YoutubeDashboard} />
+        <Route path="/youtube/admin" component={YoutubeDashboard} />
         <Route path="/youtube/:id" component={YoutubePlay} />
 
         <Route path="/register" component={RegisterScreen} />
