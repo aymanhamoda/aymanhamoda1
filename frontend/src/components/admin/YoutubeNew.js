@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Button, Form, FormGroup, FormLabel, Image } from 'react-bootstrap'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+// import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import Loader from '../../components/Loader'
 import { Link } from 'react-router-dom'
 

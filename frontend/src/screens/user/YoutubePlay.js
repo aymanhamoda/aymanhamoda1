@@ -59,8 +59,9 @@ const YoutubePlay = ({ match }) => {
       {media && (
         <Meta
           title={mediaTitle}
-          keywords={youtubes.map((youtube) => {
-            return youtube.keywords
+          description={description}
+          keywords={media.keywords.map((k) => {
+            return k.keyword
           })}
         />
       )}

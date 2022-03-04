@@ -46,6 +46,11 @@ const Youtube = ({ offMeta, limit }) => {
                 </div>
               ))}
             </div>
+            {offMeta && (
+              <Link to={`/media`} className="col font-dark text-white">
+                <h1 className="lead">See All</h1>
+              </Link>
+            )}
           </div>
         )}
       </div>
