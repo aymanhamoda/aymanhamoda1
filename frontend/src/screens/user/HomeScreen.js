@@ -11,7 +11,7 @@ const HomeScreen = () => {
     <>
       <Meta />
       <Promotion />
-      <Youtube offMeta={true} limit="3" />
+      <Youtube offMeta={true} limit="6" />
       <HomeCalcPart />
       <Courses offMeta={true} />
     </>

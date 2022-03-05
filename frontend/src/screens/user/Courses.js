@@ -51,11 +51,20 @@ const Courses = ({ offMeta }) => {
                         <strong>{course.title}</strong>
                       </div>
                       <div className="card-body">
-                        <p className="card-text lead"> {course.description}</p>
+                        <p className="card-text lead text-right">
+                          {' '}
+                          {course.description}
+                        </p>
 
-                        <a className="btn btn-danger" href={course.urlOffer}>
-                          احصل على كوبون
-                        </a>
+                        {course.isFree ? (
+                          <a className="btn btn-danger" href={course.urlOffer}>
+                            مجاني
+                          </a>
+                        ) : (
+                          <a className="btn btn-danger" href={course.urlOffer}>
+                            تعرف على المزيد
+                          </a>
+                        )}
                       </div>
                     </div>{' '}
                   </div>

@@ -39,6 +39,7 @@ const courseSchema = mongoose.Schema(
     image: {
       type: String,
     },
+    isFree: { type: Boolean, default: false },
     lectures: [lectureSchema],
     keywords: [keywordSchema],
   },
