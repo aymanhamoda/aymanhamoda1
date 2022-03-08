@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import { Col, Modal, Row } from 'react-bootstrap'
 import Loader from './Loader'
 
 const Keywords = ({ show, copyKeyword, setShowKeywordsBank }) => {

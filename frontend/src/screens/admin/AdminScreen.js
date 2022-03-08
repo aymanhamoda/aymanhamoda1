@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { Button } from 'react-bootstrap'
-import Upload from '../../components/Upload'
 import FilePreview from '../../components/FilePreview'
 
 const AdminScreen = () => {
