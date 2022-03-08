@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Button, Form, FormGroup, FormLabel, Image } from 'react-bootstrap'
+import Accordion from 'react-bootstrap/Accordion'
+import { Button, Form, FormGroup, FormLabel } from 'react-bootstrap'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 // import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import Loader from '../../components/Loader'
 import { Link } from 'react-router-dom'
+import Keywords from '../Keywords'
 
 const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
   const [mediaId, setMediaId] = useState('')
@@ -17,6 +19,9 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
   const [uploading, setUploading] = useState(false)
   const [uploadedData, setUploadedData] = useState()
 
+  const copyToBank = (keyword) => {
+    axios.post(`/api/keyword`, { keyword })
+  }
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0]
     const formData = new FormData()
@@ -90,10 +95,12 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
       .then((res) => setUploadedData(res.data))
   }
 
-  const addKeyword = () => {
+  const newKeyword = () => {
     setKeywords([...keywords, { idx: Math.random(), keyword: '' }])
   }
-
+  const copyKeyword = (k) => {
+    setKeywords([...keywords, { idx: Math.random(), keyword: k.keyword }])
+  }
   const handelKeywords = (e, k) => {
     k.keyword = e.target.value
   }
@@ -115,8 +122,6 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
       } else {
         setKeywords(selectedYoutube.keywords)
       }
-
-      // setKeywords(selectedYoutube.keywords)
     }
   }, [uploadedData, selectedYoutube, image, uploading])
   return (
@@ -182,30 +187,41 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
                   }}
                 />
               </FormGroup>{' '}
-              <div className="form-label row font-weight-bold container pt-2">
-                Keywords
-              </div>
+              <FormGroup className="row py-2 ">
+                <div className="col font-weight-bold">Keywords</div>
+                <div>
+                  <div
+                    className="btn btn-outline-danger"
+                    onClick={() => newKeyword()}>
+                    Add new keyword
+                  </div>
+                </div>
+              </FormGroup>
               <div className="row py-2">
                 {keywords.map((k) => (
-                  <FormGroup className="col-10" key={k}>
-                    <input
-                      defaultValue={k.keyword}
-                      onChange={(e) => handelKeywords(e, k)}
-                      type="text"
-                      className="form-control required"
-                      placeholder="keyword"
-                      name="keyword"
-                      data-id={k._id}
-                      id={k.keyword}
-                    />
-                  </FormGroup>
-                ))}
+                  <>
+                    <FormGroup className="col-sm-4 py-2" key={k}>
+                      <input
+                        defaultValue={k.keyword}
+                        onChange={(e) => handelKeywords(e, k)}
+                        type="text"
+                        className="form-control required"
+                        placeholder="keyword"
+                        name="keyword"
+                        data-id={k._id}
+                        id={k.keyword}
+                      />
+                    </FormGroup>
 
-                <FormGroup className="col-2">
-                  <Button className="btn-danger" onClick={() => addKeyword()}>
-                    <i className="fa fa-plus-circle" aria-hidden="true" />
-                  </Button>
-                </FormGroup>
+                    <FormGroup className="col-sm-2 py-2">
+                      <div
+                        className="btn btn-outline-dark"
+                        onClick={() => copyToBank(k.keyword)}>
+                        <i className="fa fa-copy" aria-hidden="true" />{' '}
+                      </div>
+                    </FormGroup>
+                  </>
+                ))}
               </div>
             </Form>
 
@@ -237,6 +253,7 @@ const YoutubeNew = ({ selectedYoutube, setSelectedYoutube }) => {
                 </div>
               </div>
             </div>
+            <Keywords copyKeyword={copyKeyword} />
           </div>
         </div>
       </div>

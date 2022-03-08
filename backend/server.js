@@ -11,6 +11,7 @@ import courseRoutes from './routes/courseRoutes.js'
 import promotionRoutes from './routes/promotionRoutes.js'
 import screenshotRoutes from './routes/screenshotRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import keywordRoutes from './routes/keywordRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 
 dotenv.config()
@@ -31,6 +32,7 @@ app.use('/api/courses', courseRoutes)
 app.use('/api/promotions', promotionRoutes)
 app.use('/api/screenshots', screenshotRoutes)
 app.use('/api/youtube', youtubeRoutes)
+app.use('/api/keyword', keywordRoutes)
 app.use('/api/upload', uploadRoutes)
 
 app.get('/api/uploadedfiles', (req, res) => {
