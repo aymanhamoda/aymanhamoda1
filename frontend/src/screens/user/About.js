@@ -9,7 +9,7 @@ const About = () => {
       <div className="container">
         <div className="row text-center py-5">
           <div className="col-md-6">
-            <Image src="images/lgLogo.png" alt="" />
+            <Image src="images/lgLogo.png" alt="ِAyman Hamouda" />
           </div>
           <div className="col-md-6">
             <h1> أيمن محمد حمودة </h1>

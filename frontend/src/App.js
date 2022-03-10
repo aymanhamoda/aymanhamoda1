@@ -36,6 +36,8 @@ const App = () => {
         <Route path="/ratecalc" component={RateCalcScreen} />
 
         <Route path="/courses" component={Courses} exact />
+        <Route path="/clinicalpharmacycourses" component={Courses} exact />
+
         <Route path="/courses/:id" component={CourseDetails} />
         <Route path="/course-play/:id" component={CoursePlay} />
       </div>

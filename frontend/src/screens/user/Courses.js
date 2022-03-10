@@ -37,7 +37,7 @@ const Courses = ({ offMeta }) => {
               />
             )}
             <div className="text-center text-white pb-5">
-              <h1>My Courses</h1>
+              <h1>Clinical Pharmacy Courses</h1>
             </div>
             <Container>
               <div className="row">

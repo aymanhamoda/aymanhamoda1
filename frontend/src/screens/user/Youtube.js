@@ -8,18 +8,7 @@ import { Link } from 'react-router-dom'
 const Youtube = ({ offMeta, limit }) => {
   const [youtubes, setYoutubes] = useState()
   const [error, setError] = useState('')
-  if (youtubes) {
-    let mergedKeywords = youtubes.map((y) => {
-      return y.keywords
-    })
 
-    for (let index = 0; index < 10; index++) {
-      mergedKeywords = [...mergedKeywords, mergedKeywords[index]]
-      if (index === 9) {
-        console.log(mergedKeywords)
-      }
-    }
-  }
   useEffect(() => {
     try {
       axios
@@ -60,7 +49,7 @@ const Youtube = ({ offMeta, limit }) => {
             </div>
             {offMeta && (
               <Link to={`/media`} className="col font-dark text-white">
-                <h1 className="lead">See All</h1>
+                <h1 className="lead">See More..</h1>
               </Link>
             )}
           </div>

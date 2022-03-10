@@ -13,7 +13,7 @@ const Header = () => {
         className="py-3">
         <Container>
           <Navbar.Brand href="/">
-            <Image src="/images/logo.png" alt="" />
+            <Image src="/images/logo.png" alt="Ayman Hamouda" />
           </Navbar.Brand>
           <Navbar.Brand href="/">Ayman Hamoda</Navbar.Brand>
           <Navbar.Toggle
@@ -38,7 +38,7 @@ const Header = () => {
               <Link
                 onClick={() => setExpanded(expanded ? false : 'expanded')}
                 className="text-white p-3"
-                to="/courses">
+                to="/clinicalpharmacycourses">
                 <i className="fas fa-shopping-cart"></i> Courses
               </Link>
               <Link
