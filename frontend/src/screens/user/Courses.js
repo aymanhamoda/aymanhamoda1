@@ -29,8 +29,9 @@ const Courses = ({ offMeta }) => {
           <>
             {!offMeta && (
               <Meta
+                metaImage="https://www.aymanhamoda.com/images/lgLogo.png"
                 title="Clinical Pharmacy Courses"
-                description="Clinical Pharmacy lectures"
+                description="Clinical Pharmacy courses, practical interesting lectures which are driven from many years of experience in ICU clinical pharmacy in Egypt and based on evidence-based references such as the American Board of pharmacy (bcps pharmacy), lexicomp online and others. Some of these Clinical Pharmacy lectures are free, see they now"
                 keywords={courses.map((course) => {
                   return course.title
                 })}

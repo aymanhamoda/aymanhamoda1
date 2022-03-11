@@ -5,7 +5,12 @@ import Meta from '../../components/Meta'
 const About = () => {
   return (
     <>
-      <Meta title="Ayman Hamouda" />
+      <Meta
+        metaImage="https://www.aymanhamoda.com/images/lgLogo.png"
+        title="Ayman Hamouda"
+        description="Ayman Hamouda, ICU Clinical Pharmacist, Egyptian Fellowship for Clinical Pharmacy - ICU specialty. I am a self-motivated clinical pharmacy professional with more than 9 years of experience as a clinical pharmacist at many governmental and private hospitals."
+        keywords="ayman hamouda, aymanhamouda, ayman mohamed , aymanhamoda, ayman hamoda"
+      />
       <div className="container">
         <div className="row text-center py-5">
           <div className="col-md-6">

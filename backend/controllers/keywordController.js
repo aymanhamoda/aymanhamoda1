@@ -7,7 +7,6 @@ const getKeywords = asyncHandler(async (req, res) => {
 })
 
 const createKeyword = asyncHandler(async (req, res) => {
-  console.log(req.body)
   const keyword = new Keyword({
     keyword: req.body.keyword,
   })
@@ -15,4 +14,16 @@ const createKeyword = asyncHandler(async (req, res) => {
   res.status(201).json(createdKeyword)
 })
 
-export { getKeywords, createKeyword }
+const createManyKeyword = asyncHandler(async (req, res) => {
+  const keywords = req.body.keywords
+  const manyKeywords = keywords.map((k) => {
+    return { ...k }
+  })
+  console.log(manyKeywords)
+
+  await Keyword.insertMany(manyKeywords)
+  console.log('Data Imported!'.green.inverse)
+  process.exit()
+})
+
+export { getKeywords, createKeyword, createManyKeyword }
